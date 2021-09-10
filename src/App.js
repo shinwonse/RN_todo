@@ -46,6 +46,24 @@ export default function App() {
         setTasks({...tasks, ...newTaskObject});
     };
 
+    const _deleteTask = id => {
+        const currentTasks = Object.assign({}, tasks);
+        delete currentTasks[id];
+        setTasks(currentTasks);
+    };
+
+    const _toggleTask = id => {
+        const currentTasks = Object.assign({}, tasks);
+        currentTasks[id]['completed'] = !currentTasks[id]['completed'];
+        setTasks(currentTasks);
+    };
+
+    const _updateTask = item => {
+        const currentTasks = Object.assign({}, tasks);
+        currentTasks[item.id] = item;
+        setTasks(currentTasks);
+    };
+
     const _handleTextChange = text => {
         setNewTask(text);
     };
@@ -68,7 +86,7 @@ export default function App() {
                     {Object.values(tasks)
                         .reverse()
                         .map(item => (
-                            <Task key={item.id} text={item.text} />
+                            <Task key={item.id} item={item} deleteTask={_deleteTask} toggleTask={_toggleTask} updateTask={_updateTask}/>
                         ))}
                 </List>
             </Container>
